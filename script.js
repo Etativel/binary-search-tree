@@ -103,9 +103,30 @@ class Tree {
     }
   }
 
-  inOrder() {}
-  preOrder() {}
-  postOrder() {}
+  inOrder(callback, node = this.root) {
+    if (!callback) throw new Error("A callback is required");
+    if (node !== null) {
+      this.inOrder(callback, node.left);
+      callback(node);
+      this.inOrder(callback, node.right);
+    }
+  }
+  preOrder(callback, node = this.root) {
+    if (!callback) throw new Error("A callback is required");
+    if (node !== null) {
+      callback(node);
+      this.preOrder(callback, node.left);
+      this.preOrder(callback, node.right);
+    }
+  }
+  postOrder(callback, node = this.root) {
+    if (!callback) throw new Error("A callback is required");
+    if (node !== null) {
+      this.postOrder(callback, node.left);
+      this.postOrder(callback, node.right);
+      callback(node);
+    }
+  }
   height() {}
   depth() {}
   isBalance() {}
@@ -128,4 +149,11 @@ tree.prettyPrint();
 // let find = tree.find(2);
 console.log(find);
 
+console.log("This is levelOrder");
 tree.levelOrder((node) => console.log(node));
+console.log("This is inOrder");
+tree.inOrder((node) => console.log(node));
+console.log("This is preOrder");
+tree.preOrder((node) => console.log(node));
+console.log("This is postOrder");
+tree.postOrder((node) => console.log(node));
