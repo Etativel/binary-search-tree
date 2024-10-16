@@ -92,7 +92,16 @@ class Tree {
     return this.find(value, root.right);
   }
 
-  levelOrder(callback) {}
+  levelOrder(callback) {
+    if (!callback) throw new Error("A callback is required.");
+    const queue = [this.root];
+    while (queue.length > 0) {
+      const currentNode = queue.shift();
+      callback(currentNode);
+      if (currentNode.left) queue.push(currentNode.left);
+      if (currentNode.right) queue.push(currentNode.right);
+    }
+  }
 
   inOrder() {}
   preOrder() {}
@@ -106,15 +115,17 @@ class Tree {
 const tree = new Tree([1, 2, 4, 45]);
 //
 
-tree.insert(234);
-tree.insert(237);
-tree.insert(236);
-tree.insert(232);
-tree.insert(233);
-// tree.insert(44);
-tree.prettyPrint();
-tree.deleteItem(234);
+// tree.insert(234);
+// tree.insert(237);
+// tree.insert(236);
+// tree.insert(232);
+// tree.insert(233);
+// // tree.insert(44);
+// tree.prettyPrint();
+// tree.deleteItem(234);
 tree.prettyPrint();
 
-let find = tree.find(2);
+// let find = tree.find(2);
 console.log(find);
+
+tree.levelOrder((node) => console.log(node));
