@@ -136,31 +136,37 @@ class Tree {
     }
     return this.depth(node, root.right, depth + 1);
   }
-  // depth(node, root = this.root, depth = 0) {
-  //   if (root === null) return -1;
-  //   if (node.data === root.data) return depth;
 
-  //   if (node.data < root.data) {
-  //     return this.depth(node, root.left, depth + 1);
-  //   }
-  //   return this.depth(node, root.right, depth + 1);
-  // }
-  height() {}
-  isBalance() {}
-  reBalance() {}
+  height(node = this.root) {
+    if (node === null) return -1;
+    return 1 + Math.max(this.height(node.left), this.height(node.right));
+  }
+  isBalanced(node = this.root) {
+    if (node === null) return true;
+    const heightDiff = Math.abs(
+      this.height(node.left) - this.height(node.right)
+    );
+    if (heightDiff > 1) return false;
+    return this.isBalanced(node.left) && this.isBalanced(node.right);
+  }
+  rebalance() {
+    const nodes = [];
+    this.inOrder((node) => nodes.push(node.data)); // Get sorted values
+    this.root = this.buildTree(nodes); // Build balanced tree
+  }
 }
 
 const tree = new Tree([1, 2, 4, 45]);
 //
 
-// tree.insert(234);
-// tree.insert(237);
-// tree.insert(236);
-// tree.insert(232);
-// tree.insert(233);
-// // tree.insert(44);
-// tree.prettyPrint();
-// tree.deleteItem(234);
+tree.insert(234);
+tree.insert(237);
+tree.insert(236);
+tree.insert(232);
+tree.insert(233);
+// tree.insert(44);
+tree.prettyPrint();
+tree.deleteItem(234);
 tree.prettyPrint();
 
 // let find = tree.find(2);
@@ -178,3 +184,10 @@ tree.postOrder((node) => console.log(node));
 const node = tree.find(1);
 const depthOfNode = tree.depth(node);
 console.log(depthOfNode);
+
+console.log(tree.height());
+console.log(tree.isBalanced());
+tree.rebalance();
+
+console.log("Tree after rebalancing:");
+tree.prettyPrint();
