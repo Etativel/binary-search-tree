@@ -8,6 +8,7 @@ class Node {
 
 class Tree {
   constructor(array) {
+    // sort the array first
     this.root = this.buildTree([...new Set(array)].sort((a, b) => a - b));
   }
 
@@ -19,7 +20,7 @@ class Tree {
 
     root.left = this.buildTree(array.slice(0, mid));
     root.right = this.buildTree(array.slice(mid + 1));
-    this.tree = root;
+
     return root;
   }
 
@@ -39,11 +40,38 @@ class Tree {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   }
+  insert(value, root = this.root) {
+    if (root === null) {
+      return new Node(value);
+    }
+    if (value < root.data) {
+      root.left = this.insert(value, root.left);
+    } else if (value > root.data) {
+      root.right = this.insert(value, root.right);
+    }
+    return root;
+  }
+
+  deleteItem(value, root = this.root) {
+    return;
+  }
+  find(value) {}
+
+  levelOrder(callback) {}
+
+  inOrder() {}
+  preOrder() {}
+  postOrder() {}
+  height() {}
+  depth() {}
+  isBalance() {}
+  reBalance() {}
 }
 
-const tree = new Tree([
-  1, 2, 4, 45, 3, 23, 45, 345, 213, 5, 6423, 4, 43, 4453, 45, 343243, 345345,
-  243, 5, 456, 45, 43, 6, 46, 4, 6, 456, 4, 654, 6, 456, 45, 64, 7, 64213, 4245,
-  756,
-]);
+const tree = new Tree([1, 2, 4, 45]);
+//
+
+tree.insert(234);
+tree.insert(234);
+tree.insert(234);
 tree.prettyPrint();
