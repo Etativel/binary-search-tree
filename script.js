@@ -127,8 +127,25 @@ class Tree {
       callback(node);
     }
   }
+  depth(node, root = this.root, depth = 0) {
+    if (root === null) return -1;
+    if (node.data === root.data) return depth;
+
+    if (node.data < root.data) {
+      return this.depth(node, root.left, depth + 1);
+    }
+    return this.depth(node, root.right, depth + 1);
+  }
+  // depth(node, root = this.root, depth = 0) {
+  //   if (root === null) return -1;
+  //   if (node.data === root.data) return depth;
+
+  //   if (node.data < root.data) {
+  //     return this.depth(node, root.left, depth + 1);
+  //   }
+  //   return this.depth(node, root.right, depth + 1);
+  // }
   height() {}
-  depth() {}
   isBalance() {}
   reBalance() {}
 }
@@ -157,3 +174,7 @@ console.log("This is preOrder");
 tree.preOrder((node) => console.log(node));
 console.log("This is postOrder");
 tree.postOrder((node) => console.log(node));
+
+const node = tree.find(1);
+const depthOfNode = tree.depth(node);
+console.log(depthOfNode);
