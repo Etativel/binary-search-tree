@@ -82,7 +82,15 @@ class Tree {
     return current;
   }
 
-  find(value) {}
+  find(value, root = this.root) {
+    if (root === null || root.data === value) {
+      return root;
+    }
+    if (value < root.data) {
+      return this.find(value, root.left);
+    }
+    return this.find(value, root.right);
+  }
 
   levelOrder(callback) {}
 
@@ -103,7 +111,10 @@ tree.insert(237);
 tree.insert(236);
 tree.insert(232);
 tree.insert(233);
-tree.insert(44);
+// tree.insert(44);
 tree.prettyPrint();
 tree.deleteItem(234);
 tree.prettyPrint();
+
+let find = tree.find(2);
+console.log(find);
